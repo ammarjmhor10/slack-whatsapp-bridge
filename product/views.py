@@ -5,7 +5,7 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .tasks import add
+from .tasks import add,multi
 from .models import Product, Category,Month 
 from .serializers import ProductSerializer, CategorySerializer,MonthSerializer
 # from django.core.checks impo
@@ -28,7 +28,7 @@ class ProductDetail(APIView):
     def get(self, request, category_slug, product_slug, format=None):
         product = self.get_object(category_slug, product_slug)
         serializer = ProductSerializer(product)
-        dd = add.delay(1,2)
+        dd = multi.delay(1,2)
         return Response(serializer.data)
     
 
