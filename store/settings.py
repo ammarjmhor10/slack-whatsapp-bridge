@@ -32,7 +32,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+# SECRET_KEY = print(os.getenv('SECRET_KEY'))
+SECRET_KEY = 'django-insecure-48aa6s@h$psd=3lcmm!*8kqitxnoen+t7pr%c0b3ix$&5p6m95'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get("DEBUG",False)=='1' else False
@@ -49,13 +50,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    #third-party
+    'django_celery_beat',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
-    'product',
-    'django_celery_beat'
+    #apps
+    'users',
+    'scraping',
+    'slack_bridge',
+    'whatsapp'
 ]
 
 CORS_ALLOWED_ORIGINS = [
@@ -155,5 +160,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 STATIC_ROOT = BASE_DIR / 'static/'
 
-
+# AUTH_USER_MODEL = 'users.Customer'
 # CELERY_RESULT_BACKEND = "redis://localhost:6379"
