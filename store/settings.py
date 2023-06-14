@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
-    'phonenumber_field'
+    # 'phonenumber_field'
     #apps
     'users',
     'scraping',

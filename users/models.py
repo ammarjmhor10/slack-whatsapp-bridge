@@ -11,7 +11,7 @@ SEX = [
 ]
 class Customer(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
-    # phone_number = (unique=True,null=True)
+    phone_number = PhoneNumberField(unique=True,null=True)
     sex = models.CharField(max_length=10,choices=SEX,default='Male')
     university = models.CharField(max_length=255,null=True)
     date_of_birth = models.DateField(null=True, blank=True)
