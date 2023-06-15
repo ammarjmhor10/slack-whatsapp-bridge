@@ -4,7 +4,7 @@ import requests
 from PIL import Image
 import io 
 from datetime import datetime
-
+from pydub import AudioSegment
 
 
 class WhatsappSenderMessage:
@@ -113,8 +113,20 @@ class WhatAppMediaExtracter(WhatsappSenderMessage):
     def get_media(self,media_id):
           url = f'{self.whatsapp_url}/{self.whatsapp_version_api}/{media_id}'
           r = requests.get(url=url,headers=self.headers)
-          content = requests.get(r.json()['url'],headers=self.headers)
-          if content.status_code == 200:
-              self.content = content.content
-              return content.content
-          return None 
+          if 'ogg' in r.json()['mime_type']:
+              
+            response = requests.get(r.json()['url'],headers=self.headers)
+            ogg_file_in_memory = io.BytesIO(response.content)
+            
+            # Load the OGG file from the in-memory bytes
+            audio = AudioSegment.from_ogg(ogg_file_in_memory)
+
+            # Convert and export as bytes
+            buffer = io.BytesIO()
+            audio.export(buffer, format="wav")
+            wav_bytes = buffer.getvalue()
+            return wav_bytes
+          else:
+              response = requests.get(r.json()['url'],headers=self.headers)
+              self.content = response.content
+              return response.content
