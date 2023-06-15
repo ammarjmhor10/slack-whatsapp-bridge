@@ -55,16 +55,16 @@ def status_message(ts,status):
     f = 'f'
     ch = ChatSlack.objects.get(channel_id=str(m.channel.channel_id))
     if status == 'delivered':
-        m.message_status = d
+        m.message_status = m.DELIVERED
         m.save()
         s.reactions_add(name='white_check_mark',channel=ch.channel_id,timestamp=m.ts)
         return d
     if status == 'read':
-        m.message_status = r
+        m.message_status = m.READ
         m.save()
         s.reactions_add(name='eyes',channel=ch.channel_id,timestamp=m.ts)
         return r 
     if status == 'failed':
-        m.message_status = f 
+        m.message_status = m.FAILED
         m.save()
         s.reactions_add(name='x',channel=ch.channel_id,timestamp=m.ts)
