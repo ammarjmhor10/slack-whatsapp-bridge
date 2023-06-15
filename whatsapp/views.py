@@ -41,7 +41,7 @@ class WhatsAppTest(APIView):
             v = self.verify_token(par)
             if v :
                 return HttpResponse(v)    
-            return Response('not allwoed',status=403)
+            return Response('not allwoed !',status=403)
        def post(self, request:Request, format=None):
             """
             receive whatsapp messages.
