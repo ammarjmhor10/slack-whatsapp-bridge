@@ -18,7 +18,7 @@ def send_slack_message(number,data=None):
             ch = r['channel']['id']
             customer = Customer.objects 
             chat = ChatSlack.objects.create(channel_id=ch,customer=notavailble[0])
-            s.conversations_invite(channel=ch,users=['U04692A0Y87','U05CHHUS5CG'])
+            s.conversations_invite(channel=ch,users=['U04692A0Y87','U05CHHUS5CG','U05CE5ZEENR','U05CHUU129Z'])
             if data['type']=='text':
                 s.chat_postMessage(channel=ch,text=data['text']['body'])
                 return 'done'
