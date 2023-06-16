@@ -5,6 +5,7 @@ from rest_framework.response import Response
 import slack 
 import requests 
 from .events  import Transporter
+import emoji
 # Create your views here.
 
 
@@ -16,10 +17,11 @@ def challnge(request,*args, **kwargs):
         return Response('test')
     elif request.method == 'POST':
         data = request.data 
-        # print(data)
+        print(data)
         
         if 'event' in data and data['event'] == 'send_message':
             return ResourceWarning('ok')
         r = Transporter(data)
+
         return r.valid_slack
         return Response('done')

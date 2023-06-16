@@ -47,6 +47,7 @@ class WhatsAppTest(APIView):
             receive whatsapp messages.
             """
             data = request.data
+            print(data)
             r = WhatsAppReceiver(data)
             return r.valid_whatsapp 
 
