@@ -1,6 +1,5 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-# from slack_bridge.models import MessageSlackBridge
 
 # Create your models here.
 
@@ -18,6 +17,5 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=255,null=True,blank=True)
     last_name = models.CharField(max_length=255,null=True,blank=True)
     email = models.EmailField(null=True,blank=True)
-    message_info = models.OneToOneField(MessageSlackBridge,null=True,on_delete=models.CASCADE)
     def __str__(self) -> str:
         return f'{self.phone_number}'
