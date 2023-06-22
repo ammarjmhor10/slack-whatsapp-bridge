@@ -76,3 +76,9 @@ def status_message(ts,status,number):
         m = MessageSlackBridge.objects.get_or_create(channel=ch,ts=marketing_message['ts'],message_type=MessageSlackBridge.MARKETING,wamid=ts)[0]
         re = utils.update_message_status(m=m,ch=ch,status=status,s=s)
         return re 
+    if not notavailble[1] and m : 
+        ch = ChatSlack.objects.get_or_create(customer=notavailble[0])[0]
+        # marketing_message = s.chat_postMessage(channel=ch.channel_id,text='message from out slack to this customer')
+        m = MessageSlackBridge.objects.get_or_create(channel=ch,ts=m.ts,message_type=MessageSlackBridge.SERVICE,wamid=ts)[0]
+        re = utils.update_message_status(m=m,ch=ch,status=status,s=s)
+        return re 
