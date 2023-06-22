@@ -9,7 +9,7 @@ class ChatSlack(models.Model):
     channel_id = models.CharField(max_length=255,primary_key=True)
     customer  = models.ForeignKey(Customer,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    message_info = models.TextField(verbose_name='message_info',null=True)
+    # message_info = models.TextField(verbose_name='message_info',null=True)
     message_id_info = models.CharField(("message_id"), max_length=255,unique=True,null=True)
     
     def __str__(self) -> str:

@@ -17,5 +17,10 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=255,null=True,blank=True)
     last_name = models.CharField(max_length=255,null=True,blank=True)
     email = models.EmailField(null=True,blank=True)
-    def __str__(self) -> str:
-        return f'{self.phone_number}'
+    # def __str__(self) -> str:
+    #     return f'{self.phone_number}'
+    def __str__(self):
+        if self.phone_number is not None:
+            return f'{self.phone_number}'
+        else:
+            return "Unnamed"
