@@ -125,6 +125,7 @@ class WhatAppMediaExtracter(WhatsappSenderMessage):
             buffer = io.BytesIO()
             audio.export(buffer, format="wav")
             wav_bytes = buffer.getvalue()
+            self.content = response.content
             return wav_bytes
           else:
               response = requests.get(r.json()['url'],headers=self.headers)

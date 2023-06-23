@@ -77,6 +77,15 @@ class Transporter:
                                           ,mime_type=None,ts=str(ts))
                         logging.info('receive event from a user not the bot')
                         return Response('event text received')
+                if event['type'] =='channel_deleted':
+                    channel = event['channel']
+                    slack_channel_id  = ChatSlack.objects.filter(channel_id=channel).exists()
+                    if not slack_channel_id :
+                        logging.warning('channel not found in db !!')
+                        return Response('ok')
+                    chat = ChatSlack.objects.get(channel_id=channel)
+                    chat.delete()
+                    return Response('deleted')
             return Response('done')
         else:
             logging.warning('request from not slack be carful!')
