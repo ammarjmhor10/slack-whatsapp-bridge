@@ -32,6 +32,8 @@ django-timezone-field==5.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==4.8.0
 djoser==2.1.0
+emoji==2.5.0
+emoji-data-python==1.5.0
 frozenlist==1.3.3
 google-api-core==2.11.0
 google-auth==2.19.1
