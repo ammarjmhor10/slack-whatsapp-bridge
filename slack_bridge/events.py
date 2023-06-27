@@ -1,12 +1,8 @@
 import logging
 import os
-import requests 
 from rest_framework.response import Response
-from datetime import datetime
-from PIL import Image
-import io 
 from . import tasks 
-
+import emoji_data_python
 
 
 class Message:
@@ -23,7 +19,18 @@ class Message:
 class Transporter:
     def __init__(self,data:dict) -> None:
         self.data = data
-
+    
+    
+    def extract_text(self,text:dict):
+        message = ''
+        text_type = dict(text).get('text')
+        emoji_type = text.get('unicode')
+        if emoji_type != None:
+            return message +  ':'+str(text['name'])+":"
+        if text_type != None:
+            return message + str(text_type)
+        else:
+            return message 
     @property
     def valid_slack(self) -> str:
         from .models import ChatSlack,MessageSlackBridge
@@ -33,6 +40,7 @@ class Transporter:
                 logging.info('verify url')
                 return Response({'challenge':self.data['challenge']})
             if 'event' in self.data:
+                #Documentation https://api.slack.com/events
                 event = dict(self.data['event'])
                 logging.info('receive event from slack ')
                 #check the user only 
@@ -52,25 +60,35 @@ class Transporter:
                         file = event['files'][0] 
                         mimetype = file['mimetype']
                         file_url = file['url_private_download']
-                        file_id = file['id']
                         tasks.event.delay(phone_number=str(p)
                                           ,message_type ='media',body=file_url
-                                          ,mime_type=mimetype,ts=str(slack_message_ts[0].ts))
+                                          ,mime_type=mimetype,ts=str(ts))
                         return Response('event file received')
                     #check messages 
                     #Documentation https://api.slack.com/events/message
                     if not 'files' in event and 'text' in event and slack_channel_id:
                         ts = event['ts']
-                        text= event['text']
+                        blocks = event['blocks'][0]
+                        elements = blocks['elements'][0]
+                        text = ''.join([self.extract_text(text) for text in elements['elements'] ])
                         p = chat.customer.phone_number
                         tasks.event.delay(phone_number=str(p)
-                                          ,message_type ='messages',body=text
-                                          ,mime_type=None,ts=str(slack_message_ts[0].ts))
+                                          ,message_type ='messages',body=emoji_data_python.replace_colons(text)
+                                          ,mime_type=None,ts=str(ts))
                         logging.info('receive event from a user not the bot')
                         return Response('event text received')
+                if event['type'] =='channel_deleted':
+                    channel = event['channel']
+                    slack_channel_id  = ChatSlack.objects.filter(channel_id=channel).exists()
+                    if not slack_channel_id :
+                        logging.warning('channel not found in db !!')
+                        return Response('ok')
+                    chat = ChatSlack.objects.get(channel_id=channel)
+                    chat.delete()
+                    return Response('deleted')
             return Response('done')
         else:
-            logging.warning('request from not slack be carful')
+            logging.warning('request from not slack be carful!')
             return Response('error',status=403)
         
     

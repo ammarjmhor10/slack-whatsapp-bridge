@@ -2,8 +2,8 @@ import logging
 from rest_framework.response import Response
 import os 
 from phonenumber_field.phonenumber import phonenumbers
-from slack_bridge.models import ChatSlack
-from users.models import Customer
+# from slack_bridge.models import ChatSlack
+# from users.models import Customer
 import slack 
 from . import tasks 
 class WhatsAppReceiver:
@@ -21,14 +21,14 @@ class WhatsAppReceiver:
                     name = wah_data['contacts'][0]['profile']['name']
                     number = msg['from']
                     content_type = msg['type']
-                    tasks.send_slack_message.delay(number,msg)
-                    # print(number,name,content_type,msg)
+                    tasks.send_slack_message.delay(number,name,msg)
                     return Response('done')
                 if 'statuses' in wah_data:
                     status_data = wah_data['statuses'][0]
                     status = status_data['status']
                     waid = status_data['id']
-                    tasks.status_message.delay(waid,status)
+                    number = status_data['recipient_id']
+                    tasks.status_message.delay(waid,status,number)
                     # print(waid,status)
                     return Response('done')
                     
