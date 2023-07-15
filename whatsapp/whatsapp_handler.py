@@ -61,7 +61,7 @@ class WhatsappConverterMedia(WhatsappSenderMessage):
      
     def get_media_content(self):
         r = requests.get(url=self.message.body,headers={
-            'Authorization': 'Bearer xoxb-4224677615669-5395305320821-mXpJIJh2MvtxtqNtpjcXhxPR',
+            'Authorization': 'Bearer '+os.environ.get('SLACK_TOKEN'),
             }).content
         mime_type = self.message.meme_type.split('/')[0]
         if mime_type == 'image':
