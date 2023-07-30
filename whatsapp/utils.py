@@ -42,8 +42,8 @@ def send_message_slack(data,s:slack.WebClient,ch:ChatSlack,waimd:str,status=None
         mime_type = media_data['mime_type']
         media_id  = media_data['id']
         media = WhatAppMediaExtracter()
-        media.get_media(media_id=media_id)
-        rew = s.files_upload(channels=ch.channel_id,content=media.content)
+        wav_voice = media.get_media(media_id=media_id)
+        rew = s.files_upload(channels=ch.channel_id,content=wav_voice)
         return 'done uploading'
 
 def check_chat_slack(customer:Customer,s:slack.WebClient,pn:PhoneNumber,name:str,data_message,status=None,waimd=None):
