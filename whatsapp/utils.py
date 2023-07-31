@@ -23,9 +23,8 @@ def update_message_status(m:MessageSlackBridge,ch:ChatSlack,status,s:slack.WebCl
         m.message_status = "F"
         m.save()
         s.reactions_add(name='x',channel=ch.channel_id,timestamp=m.ts)
-        error_detailes = error[0]['error_data']['details']
+        error_detailes = error[0]['title']
         message_link = f'https://activid.slack.com/archives/{m.channel.channel_id}/p{m.clean_ts}'
-        print(message_link)
         message_error = message_link + " \n "+" error:"+error_detailes
         s.chat_postMessage(channel=os.environ.get('ERROR_CHANNEL_ID'),text=message_error)
         return 'f'
