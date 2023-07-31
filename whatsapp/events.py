@@ -29,9 +29,7 @@ class WhatsAppReceiver:
                     waid = status_data['id']
                     number = status_data['recipient_id']
                     errors = status_data.get('errors')
-                    print(errors)
                     tasks.status_message.delay(waid,status,number,errors)
-                    # print(waid,status)
                     return Response('done')
                     
         else:
