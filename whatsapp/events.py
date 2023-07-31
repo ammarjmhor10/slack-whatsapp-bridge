@@ -24,11 +24,13 @@ class WhatsAppReceiver:
                     tasks.send_slack_message.delay(number,name,msg)
                     return Response('done')
                 if 'statuses' in wah_data:
-                    status_data = wah_data['statuses'][0]
+                    status_data = dict(wah_data['statuses'][0])
                     status = status_data['status']
                     waid = status_data['id']
                     number = status_data['recipient_id']
-                    tasks.status_message.delay(waid,status,number)
+                    errors = status_data.get('errors')
+                    print(errors)
+                    tasks.status_message.delay(waid,status,number,errors)
                     # print(waid,status)
                     return Response('done')
                     
