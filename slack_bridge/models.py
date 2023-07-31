@@ -39,3 +39,10 @@ class MessageSlackBridge(models.Model):
     wamid = models.TextField(verbose_name='whatsapp_message_id',null=True)
     message_type = models.CharField(max_length=1,choices=MESSAGE_CHOICES,default=SERVICE)
     message_content = models.TextField(verbose_name='message_content',null=True)
+    
+    
+    
+    @property
+    def clean_ts(self):
+        #extract message link to url
+        return ''.join(self.ts.split('.'))
