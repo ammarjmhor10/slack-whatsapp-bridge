@@ -6,3 +6,4 @@ ll.conf
 .vscode 
 .DS_Store
 static 
+db-script.sh
