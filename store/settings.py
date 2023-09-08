@@ -74,7 +74,7 @@ else:
 SECRET_KEY = env("SECRET_KEY")
 
 DEBUG = env("DEBUG")
-SECRET_KEY = 'django-insecure-48aa6s@h$psd=3lcmm!*8kqitxnoen+t7pr%c0b3ix$&5p6m95'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get("DEBUG",False)=='1' else False
