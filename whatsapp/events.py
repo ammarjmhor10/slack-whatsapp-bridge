@@ -15,7 +15,6 @@ class WhatsAppReceiver:
     def valid_whatsapp(self):
         if 'object' in self.data and self.data['entry'][0]['id'] == os.environ.get('WHATSAPP_WA_ID'):
                 wah_data = self.data['entry'][0]['changes'][0]['value']
-                # number = wah_data['metadata']['display_phone_number']
                 if 'messages' in wah_data:
                     msg = wah_data['messages'][0]
                     name = wah_data['contacts'][0]['profile']['name']

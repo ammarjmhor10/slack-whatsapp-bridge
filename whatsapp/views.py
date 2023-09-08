@@ -15,8 +15,6 @@ class WhatsAppTest(APIView):
     * Requires token authentication.
     * Only admin users are able to access this view.
     """
-    # authentication_classes = [authentication.TokenAuthentication]
-    # permission_classes = [permissions.IsAdminUser]
        
        def verify_token(self,par:dict):
            """Verify Token Whatsapp
@@ -31,7 +29,6 @@ class WhatsAppTest(APIView):
            """
            secret = os.environ.get('SECRET_WHATSAPP')
            if 'hub.challenge' in par :
-                # return HttpResponse(self.verify_token(r))
                 if secret == par['hub.verify_token']:
                     return par['hub.challenge']
            else:
@@ -47,12 +44,5 @@ class WhatsAppTest(APIView):
             receive whatsapp messages.
             """
             data = request.data
-            print(data)
             r = WhatsAppReceiver(data)
             return r.valid_whatsapp 
-
-
-# @api_view(['POST'])
-# def whatsapp_api(request:Request,*args, **kwargs):
-#     d = request.data
-#     return Response('data')

@@ -1,4 +1,4 @@
-# from django.utils.translation import gettext_lazy as _
+
 import os
 from slack_bridge.models import MessageSlackBridge,ChatSlack
 from users.models import Customer
@@ -8,7 +8,6 @@ from whatsapp.whatsapp_handler import WhatAppMediaExtracter
 
 
 def update_message_status(m:MessageSlackBridge,ch:ChatSlack,status,s:slack.WebClient,error=None):
-    # from slack_bridge.models import MessageSlackBridge
     if status == 'delivered':
         m.message_status = "D"
         m.save()
@@ -63,7 +62,6 @@ def check_chat_slack(customer:Customer,s:slack.WebClient,pn:PhoneNumber,name:str
         pinned_message = s.chat_postMessage(channel=ch.channel_id,text=customer_info)
         pinned = s.pins_add(channel=ch.channel_id,timestamp=pinned_message['ts'])
         s.conversations_invite(channel=ch.channel_id,users=str(os.environ.get('USERS_ID')).split(','))
-        # s.conversations_invite(channel=ch.channel_id,users=['U04692A0Y87','U05CHHUS5CG'])
         ch.message_id_info = pinned_message['ts']
         ch.save()
     send_message = send_message_slack(data=data_message,s=s,ch=ch,waimd=waimd,status=status,error=error)
