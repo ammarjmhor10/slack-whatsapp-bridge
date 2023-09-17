@@ -9,6 +9,8 @@ services:
     startCommand: "celery --app bridge worker --loglevel info --concurrency 4"
     autoDeploy: false
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.8.17
       - key: CELERY_BROKER_URL
         fromService:
           name: celery-redis
@@ -24,6 +26,8 @@ services:
     startCommand: "gunicorn config.wsgi:application"
     autoDeploy: false
     envVars:
+    - key: PYTHON_VERSION
+      value: 3.8.17
     - key: WEB_CONCURRENCY
       value: 4
     - key: DATABASE_URL
