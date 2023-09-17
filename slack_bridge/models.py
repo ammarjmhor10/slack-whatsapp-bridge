@@ -34,7 +34,7 @@ class MessageSlackBridge(models.Model):
                        (SERVICE, _('service')))
     ts = models.CharField(("message_id"), max_length=255,unique=True)
     channel = models.ForeignKey(ChatSlack,on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
     message_status = models.CharField(max_length=1,choices=STATUS_CHOICES,default=COMPLETED)
     wamid = models.TextField(verbose_name='whatsapp_message_id',null=True)
     message_type = models.CharField(max_length=1,choices=MESSAGE_CHOICES,default=SERVICE)

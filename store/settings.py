@@ -100,7 +100,6 @@ INSTALLED_APPS = [
     # 'phonenumber_field'
     #apps
     'users',
-    'scraping',
     'slack_bridge',
     'whatsapp'
 ]
