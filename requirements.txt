@@ -1,6 +1,6 @@
 celery
 cron-descriptor
-dj-database-ur
+dj-database-url
 Django
 django-celery-beat
 django-cors-headers
