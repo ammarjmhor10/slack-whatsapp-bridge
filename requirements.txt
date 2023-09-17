@@ -9,7 +9,6 @@ click-plugins==1.1.1
 click-repl==0.2.0
 Deprecated==1.2.13
 flower==1.0.0
-gunicorn==20.1.0
 humanize==4.0.0
 importlib-metadata==4.11.3
 itsdangerous==2.1.2
@@ -20,7 +19,6 @@ packaging==21.3
 prometheus-client==0.14.1
 prompt-toolkit==3.0.29
 pyparsing==3.0.8
-pytz==2022.1
 redis==4.2.2
 six==1.16.0
 tornado==6.1
@@ -68,7 +66,6 @@ python-crontab
 python-dateutil
 python3-openid
 pytz
-redis
 requests
 slackclient
 social-auth-app-django
