@@ -39,7 +39,6 @@ python3-openid
 pytz
 redis
 requests
-requests-oauthli
 slackclient
 social-auth-app-django
 social-auth-core
