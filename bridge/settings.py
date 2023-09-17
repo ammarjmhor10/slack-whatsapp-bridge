@@ -23,7 +23,7 @@ env.read_env()
 CELERY_TIMEZONE = "Asia/Riyadh"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL','redis://localhost:6379')
 CELERY_ACCEPT_CONTENT = ['json']
 # CELERY_RESULT_BACKEND = 'db+sqlite:///results.sqlite'
 CELERY_TASK_SERIALIZER = 'json'
@@ -96,7 +96,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
-    'djoser',
+    # 'djoser',
     # 'phonenumber_field'
     #apps
     'users',
@@ -143,20 +143,24 @@ WSGI_APPLICATION = 'bridge.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+
 DATABASES = {
     "default":
-        dj_database_url.parse(os.getenv('URL_DB'),
+        dj_database_url.parse(os.getenv('DATABASE_URL'),
                                      conn_max_age=600,
     conn_health_checks=True,)
     
 }
-
+# SECURITY
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#session-cookie-httponly
+SESSION_COOKIE_HTTPONLY = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#csrf-cookie-httponly
+CSRF_COOKIE_HTTPONLY = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#secure-browser-xss-filter
+SECURE_BROWSER_XSS_FILTER = True
+# https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
+X_FRAME_OPTIONS = 'DENY'
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -200,6 +204,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 STATIC_ROOT = BASE_DIR / 'static/'
-
+ADMIN_URL = os.environ.get('ADMIN_URL','admin')
 # AUTH_USER_MODEL = 'users.Customer'
 # CELERY_RESULT_BACKEND = "redis://localhost:6379"

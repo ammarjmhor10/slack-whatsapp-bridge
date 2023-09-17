@@ -1,0 +1,49 @@
+services:
+  - type: worker
+    name: queue
+    region: frankfurt
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "celery --app bridge worker --loglevel info --concurrency 4"
+    autoDeploy: false
+    envVars:
+      - key: CELERY_BROKER_URL
+        fromService:
+          name: celery-redis
+          type: redis
+          property: connectionString
+  - type: web
+    name: bridge
+    region: frankfurt
+    env: python
+    buildCommand: ./build.sh
+    startCommand: "gunicorn config.wsgi:application"
+    autoDeploy: false
+    envVars:
+    - key: WEB_CONCURRENCY
+      value: 4
+    - key: DATABASE_URL
+      fromDatabase:
+        name: bridge-database
+        property: connectionString
+    - key: DJANGO_SECRET_KEY
+      generateValue: true
+    - key: DJANGO_ADMIN_URL
+      generateValue: true
+    - key: CELERY_BROKER_URL
+      fromService:
+          name: celery-redis
+          type: redis
+          property: connectionString
+  - type: redis
+    name: celery-redis
+    region: frankfurt
+    # plan: starter # we choose a plan with persistence to ensure tasks are not lost upon restart
+    maxmemoryPolicy: noeviction # recommended policy for queues
+    ipAllowList: [] # only allow internal connections
+
+
+databases:
+- name: bridge-database
+  databaseName: django
+  user: django
