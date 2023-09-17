@@ -44,7 +44,7 @@ class Transporter:
                 event = dict(self.data['event'])
                 logging.info('receive event from slack ')
                 #check the user only 
-                if  'bot_id' not in event and event['type'] == 'message' and event.get('subtype') != 'channel_join' and event.get('user') != 'U05BM8Z9EQ5':
+                if  'bot_id' not in event and event['type'] == 'message' and event.get('subtype') != 'channel_join' :
                     ts = event['ts']
                     channel = event['channel']
                     slack_channel_id  = ChatSlack.objects.filter(channel_id=channel).exists()
