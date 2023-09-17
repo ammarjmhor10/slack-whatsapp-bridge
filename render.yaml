@@ -27,7 +27,7 @@ services:
     - key: WEB_CONCURRENCY
       value: 4
     - key: DJANGO_SETTINGS_MODULE
-      value: bridge.settings.production
+      value: bridge.settings
 
     - key: CELERY_BROKER_URL
       fromService:
