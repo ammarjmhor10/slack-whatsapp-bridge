@@ -2,7 +2,9 @@ services:
   - type: worker
     name: queue
     region: frankfurt
-    env: python
+    env: 
+      - type: python
+        PYTHON_VERSION: 3.8.17
     buildCommand: "pip install -r requirements.txt"
     startCommand: "celery --app bridge worker --loglevel info --concurrency 4"
     autoDeploy: false
@@ -15,7 +17,9 @@ services:
   - type: web
     name: bridge
     region: frankfurt
-    env: python
+    env: 
+      - type: python
+        PYTHON_VERSION: 3.8.17
     buildCommand: ./build.sh
     startCommand: "gunicorn config.wsgi:application"
     autoDeploy: false
