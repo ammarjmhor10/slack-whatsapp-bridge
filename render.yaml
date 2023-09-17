@@ -23,7 +23,7 @@ services:
       - type: python
         PYTHON_VERSION: 3.8.17
     buildCommand: ./build.sh
-    startCommand: "gunicorn config.wsgi:application"
+    startCommand: "gunicorn bridge.wsgi:application"
     autoDeploy: false
     envVars:
     - key: PYTHON_VERSION
