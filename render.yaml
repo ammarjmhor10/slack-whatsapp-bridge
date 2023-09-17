@@ -38,12 +38,13 @@ services:
   - type: redis
     name: celery-redis
     region: frankfurt
-    # plan: starter # we choose a plan with persistence to ensure tasks are not lost upon restart
+    plan: starter # we choose a plan with persistence to ensure tasks are not lost upon restart
     maxmemoryPolicy: noeviction # recommended policy for queues
     ipAllowList: [] # only allow internal connections
 
 
 databases:
 - name: bridge-database
+  region: frankfurt
   databaseName: django
   user: django
