@@ -8,7 +8,6 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.2.0
 Deprecated==1.2.13
-Flask==2.1.1
 flower==1.0.0
 gunicorn==20.1.0
 humanize==4.0.0
@@ -31,7 +30,6 @@ wcwidth==0.2.5
 Werkzeug==2.1.1
 wrapt==1.14.0
 zipp==3.8.0
-celery
 cron-descriptor
 dj-database-url
 Django
