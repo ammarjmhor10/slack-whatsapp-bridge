@@ -71,3 +71,5 @@ social-auth-app-django
 social-auth-core
 psycopg2-binary
 pydub
+Brotli
+whitenoise
